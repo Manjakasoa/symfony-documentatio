@@ -1,0 +1,19 @@
+2020-05-06 11:00:37.562 D/i: video.downloader.videodownloader.activity.MainTabsActivity
+2020-05-06 11:00:37.964 D/i: IAB setup...start
+2020-05-06 11:00:38.194 D/i: intent browser...https://www.facebook.com/help/1723537124537415
+2020-05-06 11:00:38.232 D/i: IAB setup...failed
+2020-05-06 11:00:38.245 D/i: IAB-setup error...Error checking for billing v3 support. (response: 3:Billing Unavailable)
+2020-05-06 11:00:43.090 D/i: web_collect...https://web.facebook.com
+2020-05-06 11:00:45.273 D/i: web_collect...https://m.facebook.com
+2020-05-06 11:00:45.322 D/i: download count...0
+2020-05-06 11:00:47.951 D/i: video.downloader.videodownloader.activity.MainTabsActivity
+2020-05-06 11:00:48.189 D/i: IAB setup...start
+2020-05-06 11:00:48.251 D/i: intent browser...https://www.facebook.com/help/1723537124537415
+2020-05-06 11:00:48.263 D/i: IAB setup...failed
+2020-05-06 11:00:48.275 D/i: IAB-setup error...Error checking for billing v3 support. (response: 3:Billing Unavailable)
+2020-05-06 11:00:48.747 D/i: web_collect...https://m.facebook.com
+2020-05-06 11:00:52.185 D/i: web_collect...https://web.facebook.com
+2020-05-06 11:00:56.417 D/i: download count...0
+2020-05-06 11:00:57.965 D/i: web_collect...https://m.facebook.com
+2020-05-06 11:00:58.338 D/i: web_collect...https://m.facebook.com
+2020-05-06 11:00:58.798 D/i: web_collect...https://m.facebook.com

@@ -1,0 +1,787 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    
+    <title>Utilisation de Faker pour saisir des données initiales dans la BD &#8212; Fast PHP 2021</title>
+
+    <link rel="stylesheet" href="_static/tether-1.3.1/css/tether.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" href="_static/bootstrap-4.0.0-alpha3/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinxbootstrap4.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/translations.js"></script>
+    <script src="_static/tether-1.3.1/js/tether.min.js"></script>
+    <script src="_static/bootstrap-4.0.0-alpha3/js/bootstrap.min.js"></script>
+    <script src="_static/sphinxbootstrap4.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="API Livres/Auteurs" href="symfony-rest-api-exemple.html" />
+    <link rel="prev" title="Exemple Livres/Auteurs avec Doctrine" href="symfony-orm-exemple.html" /> 
+  </head><body>
+  <nav class="navbar navbar-fixed-top navbar-light bg-info">
+      <div class="row container-fluid">
+           <a class="navbar-brand hidden-xs-down" href="index.html">
+              <img class="logo" src="_static/elephant.png" alt="PHP en accéléré"/>
+          </a>
+          <span class="navbar-text pull-xs-left navbar-version hidden-xs-down"><b>1.0.6</b></span>
+          <button class="navbar-toggler hidden-sm-up pull-xs-right bar-button" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+          &#9776;
+          </button>
+          <div class="hidden-xs-down">
+          <ul class="nav navbar-nav ">
+          
+              <li class="nav-item dropdown" id="navbar-pages">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown">PHP en accéléré</a>
+                  <ul class="dropdown-menu">
+                  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="php-introduction.html">Caractéristiques Principales</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-introduction.html#langage-interprete">Langage interprété</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-introduction.html#specialise-dans-la-generation-de-texte-ou-de-documents">Spécialisé dans la génération de texte ou de documents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-introduction.html#fichiers-d-extension-php">Fichiers d’extension .php</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-fonctionnement.html">Fonctionnement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-fonctionnement.html#linterpreteur">L’interpréteur</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-historique.html">Historique</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-historique.html#createur">Créateur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-historique.html#la-saga-php-7">La saga PHP 7:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-historique.html#php">PHP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-historique.html#syntaxe-et-structure">Syntaxe et structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-historique.html#utilisation">Utilisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-historique.html#cms">CMS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="php-historique.html#les-cms-de-ecommerce-aussi">Les CMS de ecommerce aussi:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="php-historique.html#frameworks">Frameworks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-installation.html">Installation  PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-installation.html#lamp">LAMP :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-installation.html#wamp">WAMP:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-installation.html#mamp">MAMP :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-installation.html#sous-linux">Sous Linux :</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-exemples-simples.html">Exemples simples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-exemples-simples.html#bonjour">bonjour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-exemples-simples.html#resultat-brut-html">Résultat brut html</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-exemples-simples.html#execution">Exécution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-exemples-simples.html#infos-php">Infos PHP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-exemples-simples.html#id2">Exécution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-exemples-simples.html#user-agent">User Agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-exemples-simples.html#exemple-de-resultat">Exemple de Résultat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-exemples-simples.html#id4">Exécution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="imbrication-php-html.html">Imbrication  de code HTML et PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="imbrication-php-html.html#exemple">Exemple :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imbrication-php-html.html#execution">Exécution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="imbrication-php-html.html#remedes">Remèdes :</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-formulaire.html">Un formulaire HTML et sa réponse en PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-formulaire.html#formulaire-html">Formulaire HTML</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-formulaire.html#sa-reponse">Sa réponse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-formulaire.html#execution">Exécution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-variables.html">Les variables en PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-variables.html#declaration-simple">Déclaration simple :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-variables.html#existence-de-variables-la-fonction-isset">Existence de variables, la fonction isset() :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-variables.html#test-de-variables-la-fonction-empty">Test de variables, la fonction empty() :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-variables.html#test-de-variables-en-php-7-avec-l-operateur-coalescent">Test de variables en PHP 7 avec l’opérateur <em>coalescent</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-variables.html#portee-des-variables">Portée des variables :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-variables.html#constantes">Constantes :</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-strings.html">Les chaînes en PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-strings.html#les-bases">Les bases:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="php-strings.html#guillemets-ou-cotes">Guillemets ou Cotes :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-strings.html#la-concatenation">La concaténation :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-strings.html#la-longueur-d-une-chaine">La longueur d’une chaine :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-strings.html#acceder-au-caractere-i-d-une-chaine">Accéder au  caractère i d’une chaine :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-strings.html#mettre-en-majuscules-minuscules">Mettre en majuscules/minuscules:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="php-strings.html#recherche-de-sous-chaines-ou-de-motifs-dans-une-chaine">Recherche de sous-chaines ou de motifs dans une chaine:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="php-strings.html#exemple-test-un-peu-plus-complet-du-useragent">Exemple: Test un peu plus complet du UserAgent :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-strings.html#resultat">Résultat:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-typage.html">Le typage en PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-typage.html#les-fonctions-gettype-et-settype">Les fonctions <em>gettype( )</em> et <em>settype( )</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="php-typage.html#gettype-renvoie-l-un-des-resultats-suivants"><em>gettype( )</em> renvoie l’un des résultats suivants:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-typage.html#settype-change-le-type-d-un-element"><em>settype( )</em> change le type d’un élément</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="php-typage.html#fonctions-de-test">Fonctions de test</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-curiosites.html">Quelques particularités de  PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-curiosites.html#valeurs-des-variables">Valeurs des variables :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-curiosites.html#resultat-brut">Résultat brut</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-curiosites.html#la-fonction-eval">La fonction <em>eval()</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-tableaux.html">Les tableaux en PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux.html#tableaux-associatifs-parcours-avec-boucle-foreach">Tableaux associatifs - parcours avec boucle foreach:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux.html#affichage-avec-print-r">Affichage avec print_r():</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux.html#resultat-brut-html">Résultat brut html :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux.html#essayez-vous-meme">Essayez vous-même</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux.html#utilisation-de-la-fonction-array-walk">Utilisation de la fonction array_walk:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux.html#tri-simple-d-un-tableau">Tri simple  d’un tableau:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux.html#on-obtient">On obtient :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux.html#tri-selon-l-ordre-naturel-avec-natsort">Tri selon l’ordre naturel avec natsort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux.html#id1">Résultat brut html</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux.html#execution">Exécution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-tableaux-superglobales.html">Les tableaux prédéfinis de PHP : Superglobales</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux-superglobales.html#les-superglobales-de-php">Les Superglobales de PHP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux-superglobales.html#exemple-recuperation-de-server-grace-a-la-fonction-getenv">Exemple récupération de $_SERVER[ ] grâce à la fonction getenv():</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux-superglobales.html#resultat">Résultat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tableaux-superglobales.html#execution">Exécution</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-include-require.html">L’inclusion de fichiers externes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-include-require.html#include"><em>include</em> :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-include-require.html#include-once"><em>include_once</em> :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-include-require.html#require-et-require-once"><em>require</em> et <em>require_once</em> :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-include-require.html#dirname"><em>dirname()</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-objets.html">Les Objets en PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-objets.html#evolutions-et-grands-principes">Evolutions et grands principes :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-objets.html#un-objet-simple-etudiant-en-php">Un Objet Simple Etudiant en PHP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="php-objets.html#ce-qui-donne-le-code-suivant">ce qui donne le code suivant:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-objets.html#resultat">Resultat:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-objets.html#execution">Execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-collections-datastructures-ds.html">Les collections en PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-collections-datastructures-ds.html#en-php-standard-collections-arrays">En PHP standard, Collections = Arrays :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-collections-datastructures-ds.html#datastructures-ds">DataStructures ds:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-collections-datastructures-ds.html#utilisation-de-ds">Utilisation de Ds:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-collections-datastructures-ds.html#exemple-d-utilisation-de-la-classe-set">Exemple d’utilisation de la classe <em>Set</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="php-collections-datastructures-ds.html#question-html-dans-un-select-multiple">Question HTML dans un select multiple:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-collections-datastructures-ds.html#reponse-php-avec-collections">Réponse PHP avec Collections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-collections-datastructures-ds.html#avec-des-arrays">Avec des Arrays:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bd-php-pdo.html">Connexion aux bases de données depuis PHP avec PDO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bd-php-pdo.html#une-table-simple-en-sql">Une table simple en SQL:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bd-php-pdo.html#connexion-simple-en-php-avec-pdo">Connexion Simple en PHP avec PDO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#resultat-brut-html">Resultat brut html :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#execution">Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#fabrication-d-une-table-html-avec-les-resultats">Fabrication d’une table HTML avec les résultats :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#resultats-bruts">Résultats bruts:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#id1">Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#et-ameliorer-l-affichage-des-resultats">et améliorer l’affichage des résultats :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#avec-le-fichier-css">Avec le fichier CSS :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#id2">Résultats bruts:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#id3">Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#creation-d-une-liste-deroulante">Création d’une liste déroulante :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#id4">Résultats bruts:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo.html#id5">Execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bd-php-pdo-prepared-statements.html">Requêtes préparées en PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bd-php-pdo-prepared-statements.html#recherche-simple-en-php-avec-pdo">Recherche simple en PHP avec PDO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo-prepared-statements.html#appel-avec-le-parametre-id-passe-sur-l-url-php-exemples-pdo-recherche-php-id-3">Appel avec le paramètre ID passé sur l’URL: php exemples/pdo/recherche.php?ID=3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo-prepared-statements.html#execution">Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bd-php-pdo-prepared-statements.html#recherche-avec-preparedstatement">Recherche avec PreparedStatement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bd-php-pdo-securite.html">Compléments sur PDO - Sécurité</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bd-php-pdo-securite.html#filtrage-d-entrees">Filtrage d’entrées</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bd-php-pdo-transactions.html">Filtrage en PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bd-php-pdo-transactions.html#gestion-des-caracteres-speciaux">Gestion des caractères spéciaux:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo-transactions.html#les-magic-quotes">Les « magic quotes »:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bd-php-pdo-transactions.html#les-filtres-php">Les filtres PHP :</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-filtrage-entrees.html">Gestion des transactions avec PDO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-filtrage-entrees.html#probleme">Problème</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-filtrage-entrees.html#connexion-persistante-avec-pdo">Connexion persistante avec PDO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="php-filtrage-gump.html">Validation et contrôle d’entrées avec GUMP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-filtrage-gump.html#pour-installer">Pour installer:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-filtrage-gump.html#nous-pouvons-utiliser-gump-pour-verifier-des-entrees">Nous pouvons utiliser Gump pour vérifier des entrées :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-filtrage-gump.html#ou-de-maniere-plus-detaillee">ou de manière plus détaillée :</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-sessions-cookies.html">Http et la conservation d’informations sur les clients</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-sessions-cookies.html#probleme">Problème</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="php-sessions-cookies.html#envoi-d-information-sur-l-url">Envoi d’information sur l’URL:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-sessions-cookies.html#execution">Exécution :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-sessions-cookies.html#utiliser-des-cookies">Utiliser des cookies:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-sessions-cookies.html#id1">Exécution :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-sessions-cookies.html#id2">Exécution :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-sessions-cookies.html#champs-caches">Champs cachés</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-xml-json.html">Manipuler XML avec PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#traitement-de-fichiers-xml-a-la-main">Traitement de fichiers XML à la main:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#execution">Exécution :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#resultat-brut-html">Resultat brut html :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#ecriture-avec-xmlwriter">Ecriture avec XMLWriter:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#resultat-brut">Resultat brut :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#resultat">Resultat  :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#traitements-avec-dom">Traitements avec DOM:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#id1">Exécution :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#id2">Resultat :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#relecture-avec-simplexml">Relecture avec SimpleXML:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#id3">Exécution :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-xml-json.html#id4">Resultat brut :</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-mvc.html">Architecture de type MVC avec PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-mvc.html#probleme">Problème</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-mvc.html#du-php-pur-aux-templates-php">Du PHP pur aux templates PHP:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-mvc.html#un-template-php">Un template PHP:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-mvc.html#isolons-la-logique-applicative">Isolons la logique applicative:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-mvc.html#layout">Layout:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-mvc.html#heritage-de-templates">Héritage de templates:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="php-mvc.html#affichage-des-details-d-une-personne">Affichage des détails d’une personne</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-twig.html">Templates Twig en PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-twig.html#composer">composer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-twig.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-twig.html#affichage-des-personnes-du-carnet">Affichage des personnes du Carnet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-twig.html#affichage-des-personnes-avec-un-template-plus-simple">Affichage des Personnes avec un template plus simple</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-silex.html">Le microframework  Silex</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-silex.html#installation-et-configuration-silex">Installation et configuration Silex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-silex.html#routage-avec-silex">Routage avec Silex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="php-silex.html#pour-une-route-avec-parametre">Pour une route avec paramètre</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-silex.html#carnet-avec-silex">CARNET avec Silex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-silex.html#controleur-principal">Contrôleur principal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="php-silex.html#service-xml">Service XML</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-tests-tdd-phpunit.html">Tester une application PHP - TDD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-tests-tdd-phpunit.html#tdd">TDD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-tests-tdd-phpunit.html#interet-de-la-demarche">Intérêt de la démarche:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api-principes.html">Mettre en place un Web Service REST</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rest-api-principes.html#probleme">Problème</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="rest-api-principes.html#methodes-http-et-rest">Méthodes HTTP et REST:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api-php.html">Exemple de service REST avec PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rest-api-php.html#probleme">Problème</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api-tests-curl.html">Tester une API REST avec votre navigateur ou avec curl</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rest-api-tests-curl.html#pour-tester-un-get">Pour tester un GET:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest-api-tests-curl.html#pour-tester-un-post">Pour tester un POST:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest-api-tests-curl.html#test-un-put">Test un PUT:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest-api-tests-curl.html#test-de-delete">Test de DELETE:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="rest-api-postman-guzzle.html">Tester une API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="rest-api-postman-guzzle.html#tester-une-api-avec-postman">Tester une API avec Postman</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rest-api-postman-guzzle.html#tester-une-api-rest-avec-guzzle">Tester une API REST avec Guzzle</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="symfony-composer-create-project.html">Composer et  Symfony</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="symfony-composer-create-project.html#httpfoundation">HttpFoundation:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-composer-create-project.html#creer-une-application-symfony">Créer une application Symfony</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-composer-create-project.html#l-installeur-symfony">L’installeur symfony</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-composer-create-project.html#avec-composer">Avec composer :</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-composer-create-project.html#squellette-d-application-symfony">Squellette d’application Symfony :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-composer-create-project.html#squellette-d-application-web-symfony">Squellette d’application web Symfony</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="symfony-simple-app.html">Débuts avec Symfony</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="symfony-simple-app.html#preparatifs">Préparatifs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#squellette-d-application-symfony">Squellette d’application Symfony</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#serveur-web-embarque-de-symfony">Serveur Web embarqué de Symfony</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-simple-app.html#un-controleur-et-une-route-simple">Un Controleur et une route simple</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#routes">routes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#controleur">contrôleur</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-simple-app.html#annotations-et-routes-parametrees">Annotations et routes paramétrées</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#annotations">annotations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#routes-parametrees">routes paramétrées</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#debug-des-routes">debug des routes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#la-commande-bin-console">la commande bin/console</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-simple-app.html#utiliser-des-templates-twig-dans-sf">Utiliser des templates Twig dans sf</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#installation">installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#controleur-avec-twig">contrôleur avec twig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#template-twig">template twig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-app.html#memo-twig">Memo twig</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="symfony-orm-doctrine.html">Doctrine et Symfony</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="symfony-orm-doctrine.html#orm-doctrine">ORM Doctrine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#orm">ORM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#installation">installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-orm-doctrine.html#symfony-maker-bundle">symfony maker-bundle</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#id1">installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#sous-commandes-disponibles">sous-commandes disponibles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#entites">Entités</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#config">Config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#interaction-avec-la-bd">Interaction avec la BD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#easy-admin">easy_admin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#generateur-de-crud">générateur de CRUD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#profiler">profiler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#debug-des-routes">debug des routes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-orm-doctrine.html#securite">sécurité</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="symfony-orm-exemple.html">Exemple Livres/Auteurs avec Doctrine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="symfony-orm-exemple.html#entites">Entités</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-orm-exemple.html#interaction-avec-la-bd">Interaction avec la BD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-orm-exemple.html#relancons-le-make-crud">Relançons le make:crud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-orm-exemple.html#template-de-base-avec-bootstrap">Template de base avec Bootstrap</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Utilisation de Faker pour saisir des données initiales dans la BD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation-de-doctrinefixturesbundle">Installation de DoctrineFixturesBundle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-de-faker">Installation de Faker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#completons-appfixtures-php">Complétons AppFixtures.php</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#chargeons-les-fixtures">Chargeons les fixtures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="symfony-rest-api-exemple.html">API Livres/Auteurs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="symfony-rest-api-exemple.html#api-livres-et-auteurs-a-la-main">API livres et auteurs « à la main »</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-rest-api-exemple.html#lister-tous-les-auteurs">Lister tous les auteurs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-rest-api-exemple.html#puis-pour-avoir-les-details-d-un-auteur">Puis pour avoir les détails d’un auteur</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-rest-api-exemple.html#creer-un-auteur">Créer un auteur</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-rest-api-exemple.html#supprimer-un-auteur">Supprimer un auteur</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-rest-api-exemple.html#modifier-un-auteur">Modifier un auteur</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-rest-api-exemple.html#avec-le-composant-d-api-apiplatform">Avec le composant d’API APIPlatform</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-rest-api-exemple.html#installation-d-apiplatform">Installation d’APIPlatform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-rest-api-exemple.html#graphql">GraphQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-rest-api-exemple.html#friendsofsymfony-rest-bundle">FriendsOfSymfony REST Bundle</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="symfony-rest-api-JS-client-fetch-await-async.html">Consultation de l’API avec JS : fetch, await, async</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="symfony-rest-api-JS-client-fetch-await-async.html#interrogation-de-l-api-auteurs">Interrogation de l’API auteurs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-rest-api-JS-client-fetch-await-async.html#interrogation-de-l-api-livres">Interrogation de l’API livres</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="symfony-simple-auth.html">Authentification élémentaire en Symfony</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="symfony-simple-auth.html#initialisation-du-projet-symfony">Initialisation du projet Symfony</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-simple-auth.html#modification-de-notre-application">Modification de notre application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-auth.html#la-creation-d-un-utilisateur">La création d’un utilisateur</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-simple-auth.html#creation-de-la-page-de-connexion">Création de la page de connexion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-auth.html#template-de-connexion">Template de connexion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-auth.html#cote-controller">Côté controller</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-simple-auth.html#naviguer-en-utilisant-l-authentification">Naviguer en utilisant l’authentification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-simple-auth.html#navigation-avec-les-droits">Navigation avec les droits</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="symfony-securitybundle-auth.html">Authentification avec le SecurityBundle de Symfony</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="symfony-securitybundle-auth.html#initialisation-du-projet-symfony">Initialisation du projet Symfony</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-securitybundle-auth.html#installation-de-securitybundle">Installation de SecurityBundle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-securitybundle-auth.html#creation-de-l-entite-utilisateur">Création de l’entité utilisateur</a></li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-securitybundle-auth.html#crud-utilisateur">CRUD utilisateur</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#le-controller">Le controller :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#le-formulaire">Le formulaire :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#script-de-verification">Script de vérification :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#loginformauthenticator">LoginFormAuthenticator :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#base-template">Base template :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#modification-d-un-utilisateur">Modification d’un utilisateur</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-securitybundle-auth.html#navigation-avec-les-droits">Navigation avec les droits</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#creation-d-un-nouveau-controller">Création d’un nouveau controller :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#modification-du-template-de-base">Modification du template de base :</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#navigation-dans-le-template">Navigation dans le template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#navigation-dans-le-controller">Navigation dans le controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#navigation-dans-la-configuration">Navigation dans la configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="symfony-securitybundle-auth.html#exemple-final">Exemple final</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="symfony-securitybundle-auth.html#fichier-de-config">Fichier de config</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#security-yaml">security.yaml</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-securitybundle-auth.html#controllers">Controllers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#navigationcontroller">NavigationController</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#utilisateurcontroller">UtilisateurController</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#securitycontroller">SecurityController</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-securitybundle-auth.html#templates">Templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#base-html-twig">base.html.twig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#new-html-twig">new.html.twig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#edit-html-twig">edit.html.twig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#show-html-twig">show.html.twig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#login-html-twig">login.html.twig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#les-templates-de-navigationcontroller">Les templates de NavigationController</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="symfony-securitybundle-auth.html#css">CSS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="symfony-securitybundle-auth.html#public-css-style-css">public/css/style.css</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="td-lp-2018.html">Feuilles de TD Lic Pro Web et Mobile</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="td-lp-2018.html#annee-2018-2019">Année 2018-2019</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="td-2a-2018.html">Feuilles de TD 2ème Année IUT informatique</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="td-2a-2018.html#annee-2018-2019">Année 2018-2019</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git-cmds-base.html">Alice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#parametrage-et-initialisations">Paramétrage et initialisations:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#creation-dun-dossier-local-versionne">Création d’un dossier local versionné</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#ajout-de-contenu-dans-monprojet">Ajout de contenu dans monprojet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#on-commite">On commite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#on-verifie-lhistorique">On vérifie l’historique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#ajout-dun-nouveau-fichier-par-alice">Ajout d’un nouveau fichier par Alice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#modification-du-fichier-readme-md">Modification du fichier Readme.md</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#git-status-et-git-show">git status et git show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#alice-cree-un-depot-prive-monprojet-sur-gitlab">Alice crée un dépot (privé) “monprojet” sur Gitlab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#connexion-entre-le-local-et-le-gitlab">Connexion entre le local et le gitlab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#alice-pousse-son-master-sur-son-remote">Alice pousse son master sur son remote</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#autres-reglages-git">Autres réglages git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="git-cmds-base.html#memoriser-les-identifiants">Mémoriser les identifiants</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="git-cmds-base.html#sous-linux">Sous Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="git-cmds-base.html#sous-windows-gitbash-est-configure-par-defaut-avec-le-manager">Sous Windows, <em>gitbash</em> est configuré par défaut avec le manager</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="git-cmds-base.html#configurer-son-editeur-favori">Configurer son éditeur favori</a></li>
+<li class="toctree-l3"><a class="reference internal" href="git-cmds-base.html#fichier-gitconfig">Fichier .gitconfig</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#bob-collabore-avec-alice">Bob collabore avec Alice</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="git-cmds-base.html#fork">Fork</a></li>
+<li class="toctree-l3"><a class="reference internal" href="git-cmds-base.html#remotes">remotes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#realisation-d-une-fonctionnalite-par-alice">Réalisation d’une fonctionnalité par Alice :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#id1">Alice pousse son master sur son remote:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git-cmds-base.html#bob-travaille-en-collaboration-avec-alice-grace-a-git">Bob travaille en collaboration avec Alice grâce à git:</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#bob-configure-ses-remotes">Bob configure ses remotes:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#bob-recupere-le-master-d-alice">Bob récupère le master d’Alice:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#bob-consulte-la-branche-locale-correspondant-au-master-d-alice">Bob consulte la branche locale correspondant au master d’Alice:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#bob-revient-dans-son-master">Bob revient dans son master:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#bob-merge-le-travail-d-alice-et-pousse-les-modifs-dans-son-depot-distant">Bob merge le travail d’Alice et pousse les modifs dans son dépôt distant:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git-cmds-base.html#alice-se-met-a-jour">Alice se met à jour:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git-cmds-base.html#corriger-des-erreurs-git">Corriger des erreurs Git</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#defaire-le-dernier-commit">Défaire le dernier commit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-base.html#supprimer-une-revision">Supprimer une révision</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git-cmds-branchs.html">Scénario de travail collaboratif à l’aide de branches</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#le-probleme">le problème</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="git-cmds-branchs.html#le-travail-collaboratif">Le travail collaboratif</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="git-cmds-branchs.html#bob">Bob</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#creation-dune-branche-bd-et-utilisation-de-celle-ci">Création d’une branche bd et utilisation de celle-ci:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#bob-pousse-sa-branche-sur-son-remote">Bob pousse sa branche sur son remote:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#alice-accepte-directement-le-merge-request">Alice accepte directement le Merge Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#alice-recupere-la-branche-de-bob">Alice récupère la branche de Bob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#alice-consulte-la-branche-de-bob">Alice consulte la branche de Bob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#alice-revient-dans-son-master">Alice revient dans son master</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#puis-alice-accepte-le-merge-request-et-met-a-jour-sa-copie-locale">puis Alice accepte le Merge Request et met à jour sa copie locale</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git-cmds-branchs.html#bob-1">Bob</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#soit-avec-un-fetch-et-un-merge">Soit avec un fetch et un merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#soit-directement-avec-un-pull">Soit directement avec un pull</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git-cmds-branchs.html#commandes-utiles-avec-les-branches">Commandes utiles avec les branches</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#renommage-de-branche">Renommage de branche</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#modification-dune-branche-distante">Modification d’une branche distante</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-cmds-branchs.html#suppression-dune-branche-distante">Suppression d’une branche distante</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git-merge-rebase.html">Merge vs Rebase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git-merge-rebase.html#illustration">Illustration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-merge-rebase.html#merge">Merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-merge-rebase.html#rebase">Rebase</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git-merge-rebase.html#utilisation-de-merge">Utilisation de Merge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="git-merge-rebase.html#utilisation-de-rebase">Utilisation de Rebase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git-merge-rebase.html#pour-se-mettre-a-jour-sur-un-projet-sur-lequel-on-collabore">pour se mettre à jour sur un projet sur lequel on collabore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git-merge-rebase.html#pour-revisiter-un-historique-defaillant">pour revisiter un historique défaillant</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="php-configuration.html">Configuration  PHP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="php-configuration.html#le-fichier-php-ini">Le fichier PHP.ini</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-configuration.html#sous-la-plupart-des-distributions-linux">Sous la plupart des distributions Linux :</a></li>
+<li class="toctree-l2"><a class="reference internal" href="php-configuration.html#les-directives-principales-php-ini">Les directives principales  PHP.ini :</a></li>
+</ul>
+</li>
+</ul>
+
+                  </ul>
+              </li>
+              <li class="nav-item">
+              <a  class="nav-link" href="index.html">Home</a></li>
+              <li class="nav-item">
+              
+                  <a  class="nav-link" href="http://php.net/manual/fr/index.php">Doc PHP</a></li>
+          </ul>
+             
+<form class="form-inline pull-sm-right" action="search.html" method="get">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          </div>
+      </div>
+
+      <div class="row hidden-sm-up">
+          <div class="collapse navbar-toggleable-xs container" id="exCollapsingNavbar2">
+              <div class="container">
+             　　 <a class="navbar-brand" href="index.html">
+                      <img class="logo" src="_static/elephant.png" alt="PHP en accéléré"/>
+                  </a>
+              </div>
+              <ul class="nav navbar-nav">
+                  <li>
+                  <a  class="nav-link" href="index.html">Home</a></li>
+                  <li>
+                  
+                      <a  class="nav-link" href="http://php.net/manual/fr/index.php">Doc PHP</a></li>
+              </ul>
+              <div class="dropdown-divider"></div>
+              <div class="navbar-text">search<div>
+              
+<form class="form-inline pull-sm-right" action="search.html" method="get">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          </div>
+      </div>
+    </nav>
+  </div>
+
+    <div class="related container-fluid bg-faded" role="navigation" aria-label="related navigation">
+        <ol class="breadcrumb col-md-8">
+            <li class="breadcrumb-item"><a href="index.html">Fast PHP 2021</a></li>
+            <li class="breadcrumb-item active">Utilisation de Faker pour saisir des données initiales dans la BD</li>
+        </ol>
+       <div class="relation col-md-4">
+           <div class="pull-xs-right">
+               <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+               <a href="symfony-orm-exemple.html" title="Previous Chapter: Exemple Livres/Auteurs avec Doctrine" class="btn btn-primary" role="botton" accesskey="P">
+                   &laquo; Exemple Livre...
+               </a>
+               <a href="symfony-rest-api-exemple.html" title="Next Chapter: API Livres/Auteurs" class="btn btn-primary" role="botton" accesskey="N">
+                   API Livres/Auteurs &raquo;
+               </a>
+               </div>
+           </div>
+       </div>
+    </div>
+
+  <div class="main">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="symfony-orm-ixtures-faker"></span><div class="section" id="utilisation-de-faker-pour-saisir-des-donnees-initiales-dans-la-bd">
+<span id="index-0"></span><h1>Utilisation de Faker pour saisir des données initiales dans la BD<a class="headerlink" href="#utilisation-de-faker-pour-saisir-des-donnees-initiales-dans-la-bd" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Nous voudrions générer des données initiales automatiquement pour notre bibliothèque de Livres et Auteurs.
+Nous allons pour celà utiliser le  <a class="reference external" href="https://github.com/fzaninotto/Faker">Bundle Faker</a></p>
+<div class="section" id="installation-de-doctrinefixturesbundle">
+<h2>Installation de DoctrineFixturesBundle<a class="headerlink" href="#installation-de-doctrinefixturesbundle" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>composer req --dev make doctrine/doctrine-fixtures-bundle
+</pre></div>
+</div>
+<p>Ceci crée dans le dossier <em>src</em> un dossier <em>DataFixtures</em> contenant un fichier à compléter <em>AppFixtures.php</em>.
+On peut utiliser <em>DoctrineFixturesBundle</em> sans Faker mais pas aussi convivial !</p>
+<p>Voir la <a class="reference external" href="https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html">doc correspondante</a></p>
+</div>
+<div class="section" id="installation-de-faker">
+<h2>Installation de Faker<a class="headerlink" href="#installation-de-faker" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Le Bundle Faker est spécialisé dans la génération de données aléatoires vraisemblables de tous types (chaines, noms, adresses, lorem, nombres, dates, etc.) avec localisation.</p>
+<p>Nous l’installons avec :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>composer require --dev fzaninotto/faker
+</pre></div>
+</div>
+</div>
+<div class="section" id="completons-appfixtures-php">
+<h2>Complétons AppFixtures.php<a class="headerlink" href="#completons-appfixtures-php" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Nous allons maintenant compléter le fichier AppFixtures.php pour qu’il crée automatiquement un ensemble de données initiales de Livres et d’Auteurs.</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+  <span class="k">namespace</span> <span class="nx">App\DataFixtures</span><span class="p">;</span>
+
+  <span class="k">use</span> <span class="nx">App\Entity\Livre</span><span class="p">;</span>
+  <span class="k">use</span> <span class="nx">App\Entity\Auteur</span><span class="p">;</span>
+
+  <span class="k">use</span> <span class="nx">Doctrine\Bundle\FixturesBundle\Fixture</span><span class="p">;</span>
+  <span class="k">use</span> <span class="nx">Doctrine\Common\Persistence\ObjectManager</span><span class="p">;</span>
+  <span class="k">use</span> <span class="nx">Faker</span><span class="p">;</span>
+
+ <span class="k">class</span> <span class="nc">AppFixtures</span> <span class="k">extends</span> <span class="nx">Fixture</span>
+ <span class="p">{</span>
+     <span class="k">public</span> <span class="k">function</span> <span class="nf">load</span><span class="p">(</span><span class="nx">ObjectManager</span> <span class="nv">$manager</span><span class="p">)</span>
+      <span class="p">{</span>
+       <span class="nv">$faker</span> <span class="o">=</span> <span class="nx">Faker\Factory</span><span class="o">::</span><span class="na">create</span><span class="p">(</span><span class="s1">&#39;fr_FR&#39;</span><span class="p">);</span>
+           <span class="c1">// on crée 4 auteurs avec noms et prénoms &quot;aléatoires&quot; en français</span>
+           <span class="nv">$auteurs</span> <span class="o">=</span> <span class="k">Array</span><span class="p">();</span>
+           <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+               <span class="nv">$auteurs</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Auteur</span><span class="p">();</span>
+               <span class="nv">$auteurs</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">setNom</span><span class="p">(</span><span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">lastName</span><span class="p">);</span>
+               <span class="nv">$auteurs</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">setPrenom</span><span class="p">(</span><span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">firstName</span><span class="p">);</span>
+
+               <span class="nv">$manager</span><span class="o">-&gt;</span><span class="na">persist</span><span class="p">(</span><span class="nv">$auteurs</span><span class="p">[</span><span class="nv">$i</span><span class="p">]);</span>
+           <span class="p">}</span>
+       <span class="c1">// nouvelle boucle pour créer des livres</span>
+
+       <span class="nv">$livres</span> <span class="o">=</span> <span class="k">Array</span><span class="p">();</span>
+
+       <span class="k">for</span> <span class="p">(</span><span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+               <span class="nv">$livres</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Livre</span><span class="p">();</span>
+               <span class="nv">$livres</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">setTitre</span><span class="p">(</span><span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">sentence</span><span class="p">(</span><span class="nv">$nbWords</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="nv">$variableNbWords</span> <span class="o">=</span> <span class="k">true</span><span class="p">));</span>
+               <span class="nv">$livres</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">setAnnee</span><span class="p">(</span><span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">numberBetween</span><span class="p">(</span><span class="nv">$min</span> <span class="o">=</span> <span class="mi">1900</span><span class="p">,</span> <span class="nv">$max</span> <span class="o">=</span> <span class="mi">2020</span><span class="p">));</span>
+               <span class="nv">$livres</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">setAuteur</span><span class="p">(</span><span class="nv">$auteurs</span><span class="p">[</span><span class="nv">$i</span> <span class="o">%</span> <span class="mi">3</span><span class="p">]);</span>
+
+               <span class="nv">$manager</span><span class="o">-&gt;</span><span class="na">persist</span><span class="p">(</span><span class="nv">$livres</span><span class="p">[</span><span class="nv">$i</span><span class="p">]);</span>
+           <span class="p">}</span>
+
+           <span class="nv">$manager</span><span class="o">-&gt;</span><span class="na">flush</span><span class="p">();</span>
+       <span class="p">}</span>
+   <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="chargeons-les-fixtures">
+<h2>Chargeons les fixtures<a class="headerlink" href="#chargeons-les-fixtures" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>php bin/console doctrine:fixtures:load
+</pre></div>
+</div>
+<p>Testons :</p>
+<img alt="_images/screenshot-livre-index.png" src="_images/screenshot-livre-index.png" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+    </div></div>
+      <div class="sphinxsidebar hidden-sm-down">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table des matières</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Utilisation de Faker pour saisir des données initiales dans la BD</a><ul>
+<li><a class="reference internal" href="#installation-de-doctrinefixturesbundle">Installation de DoctrineFixturesBundle</a></li>
+<li><a class="reference internal" href="#installation-de-faker">Installation de Faker</a></li>
+<li><a class="reference internal" href="#completons-appfixtures-php">Complétons AppFixtures.php</a></li>
+<li><a class="reference internal" href="#chargeons-les-fixtures">Chargeons les fixtures</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Sujet précédent</h4>
+  <p class="topless"><a href="symfony-orm-exemple.html"
+                        title="Chapitre précédent">Exemple Livres/Auteurs avec Doctrine</a></p>
+  <h4>Sujet suivant</h4>
+  <p class="topless"><a href="symfony-rest-api-exemple.html"
+                        title="Chapitre suivant">API Livres/Auteurs</a></p>
+<div id="searchbox" style="display: none">
+    <form class="form search" action="search.html" method="get">
+      <input type="text" name="q" class="form-control" placeholder="Search..." />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </div>
+<footer class="footer">
+  <div class="container-fluid">
+    <div class="text-xs-left col-md-9 copyright">
+        <div>&copy; Copyright 2021, Gérard Rozsavolgyi.</div>
+      <div>Mis à jour le 05 sept. 2021.</div>
+    </div>
+    <div class="pull-xs-right">
+        <a href="#" class="btn btn-primary btn-sm" role="botton">Back to top</a>
+    </div>
+  </div>
+</footer>
+  </body>
+</html>
